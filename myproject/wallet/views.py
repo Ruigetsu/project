@@ -6,6 +6,7 @@ from .models import Wallet, Balance
 from wallet.serializers import WalletSerializer, BalanceSerializer 
 import json
 import requests
+from django.shortcuts import render, redirect
 
 @api_view(['GET', 'POST'])
 def wallet_list(request, format = None):
@@ -76,11 +77,14 @@ def wallet_details(request, pk):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method  == 'DELETE':
+        Balance.objects.filter(wallet_id=wallet.id).delete()
         wallet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     elif  request.method == 'GET':
+        wallet = Wallet.objects.get(pk=pk)
         serializer = WalletSerializer(wallet, data = request.data, context={'request': request})
-        return  Response(serializer.data, status = status.HTTP_200_OK)
+        if serializer.is_valid():
+            return  Response(serializer.data, status = status.HTTP_200_OK)
     
 @api_view(['GET', 'PUT', 'DELETE'])  
 def balance_details(request, pk):
