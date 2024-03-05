@@ -26,9 +26,9 @@ class Balance(models.Model):
         super(Balance, self).save(*args, **kwargs)
 
 class Network(models.Model):
-    network_name = models.CharField(max_length=255, unique = True)
+    network = models.CharField(max_length=255)
     network_url = models.CharField(max_length=255)
-    network_ABI = models.CharField(max_length=255)
+    network_ABI = models.TextField(max_length=25500)
     
     def __str__(self):
-        return self.network_name
+        return self.network

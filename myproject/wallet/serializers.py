@@ -14,7 +14,6 @@ class BalanceSerializer(serializers.ModelSerializer):
         fields= '__all__'
 
 class NetworkSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = Network
         fields= '__all__'

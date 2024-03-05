@@ -43,10 +43,9 @@ def balance_list(request, format = None):
         if Balance.objects.filter(wallet_id=wallet_id,network_id = network_id, token_address=token_address).count() != 0:
             return Response("ERROR",status=status.HTTP_400_BAD_REQUEST)
         wallet = Wallet.objects.get(pk=wallet_id)
-        network= Network.objects.get(pk=network_id)
-        token_symbol = get_token_symbol(token_address)
+        token_symbol = get_token_symbol(token_address, network_id)
         token_price = get_token_price(token_symbol)
-        balance = get_balance(wallet.wallet_address, token_address, network.network_name)
+        balance = get_balance(wallet.wallet_address, token_address, network_id)
 
         serializer = BalanceSerializer(data = {
             'token': token_symbol,
@@ -119,11 +118,11 @@ def network_list(request, format = None):
         return Response({'data': serializer.data})
     
     elif request.method == "POST":
-        serializer =NetworkSerializer(data=request.data)
+        serializer=NetworkSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
         else:
-            return Response("This network does't exist", status = status.HTTP_404_NOT_FOUND)
+            return Response("Error", status = status.HTTP_404_NOT_FOUND)
         return Response(serializer.data, status = status.HTTP_201_CREATED)
     return Response('ERROR', status = status.HTTP_404_NOT_FOUND)
     
