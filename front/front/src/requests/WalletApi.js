@@ -1,14 +1,14 @@
 import axios from "axios";
 
-let host = '127.0.0.1:8000'
+let host = '3f9215732d0c.vps.myjino.ru'
  
 export const fetchAllWallets = async () => {
     const {data} = await  axios.get(`http://${host}/api/wallet/`);
-    return data
+    return data.data;
 }
 
 
-export const CreateWallet = async (wallet) => {
+export const createWallet = async (wallet) => {
     const config = {
         headers: {
             'Content-Type':'multipart/form-data'

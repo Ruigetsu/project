@@ -1,23 +1,22 @@
 import './WalletList.css'
-import { useState } from 'react';
-import AddForm from '../AddForm/AddForm.js'
 import WalletItem from './WalletItem'
+import { useSelector } from 'react-redux';
 
 function WalletList(props) {
-    const [wallet,setWallet] = useState([])
+    const wallets = useSelector((state) => state.wallet);
+
     return (
-        <div>
-            <h1>Wallet List</h1>
-            <AddForm setWallet={setWallet}/>
-            <ul 
-                className="todo-list stack-large stack-exception"
-                aria-labelledby="list-heading">
+        <div className='wallet_list'>
+            <p className='wallet_wrapper_title'>Wallet List</p>
+            <div
+                className="wallets_wrapper"
+            >
                 {
-                  wallet.map((item, index)=>{
-                     return  <WalletItem key={index} todo={item} index={index} setTodos={setWallet}></WalletItem>
+                  wallets && wallets.map((item, index)=>{
+                     return  <WalletItem key={index} wallet={item} index={index}></WalletItem>
                  })
                 }
-            </ul>
+            </div>
         </div>
     )
 }
