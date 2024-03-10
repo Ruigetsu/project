@@ -106,7 +106,7 @@ def balance_details(request, pk):
         balance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     elif request.method == 'GET':
-        serializer = WalletSerializer(balance, data = request.data, context={'request': request})
+        serializer = BalanceSerializer(balance, data = request.data, context={'request': request})
         return  Response(serializer.data, status = status.HTTP_200_OK)
     
 @api_view(['GET', 'POST'])
@@ -144,5 +144,7 @@ def network_details(request, pk):
         network.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     elif request.method == 'GET':
-        serializer = BalanceSerializer(network, data = request.data, context={'request': request})
-        return  Response(serializer.data, status = status.HTTP_200_OK)
+        netwrok = Network.objects.get(pk=pk)
+        serializer = NetworkSerializer(network, data = request.data, context={'request': request})
+        if serializer.is_valid():
+            return  Response(serializer.data, status = status.HTTP_200_OK)

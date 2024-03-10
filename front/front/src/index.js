@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './AddForm';
-
+import AddForm from './AddForm/AddForm';
+import WalletList from './WalletList/WalletList'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <AddForm />
+    <WalletList/>
   </React.StrictMode>
 );
 
