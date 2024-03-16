@@ -1,10 +1,13 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
-import { fetchAllBalances } from "../requests/WalletApi";
+import { createReducer } from "@reduxjs/toolkit";
+import { fetchAllBalances } from "../requests/BalanceApi";
 
-const walletReducer = createReducer(await fetchAllBalances(), (builder) => {
+const tokenReducer = createReducer(await fetchAllBalances(), (builder) => {
     builder
         .addCase('ADD_TOKEN', (state, action) => {
             return [...state, action.payload];
         })
+        .addCase('REMOVE_TOKEN', (state, action) => {
+            return state.filter((token) => token.id !== action.payload);
+        })
   });
-export default walletReducer;
+export default tokenReducer;
