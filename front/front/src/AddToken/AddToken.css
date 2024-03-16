@@ -1,0 +1,27 @@
+.add_token {
+    width: 300px;
+}
+
+.inputToken {
+    padding: 10px;
+    margin: 5px;
+    width: calc(100%-20px);
+
+    font-size: 14px;
+    font-weight: 400;
+
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+
+    margin: 5px;
+    font-size: 12px;
+    font-weight: 300;
+    font-family: Roboto Mono,monospace;
+}
+
+.label_token {
+    margin: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: Roboto Mono,monospace;
+}
