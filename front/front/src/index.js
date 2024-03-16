@@ -6,11 +6,13 @@ import {store} from './store/store.js';
 import { Provider } from 'react-redux';
 import "./index.css";
 import AddWallet from './AddWallet/AddWallet.js';
+import AddToken from './AddToken/AddToken.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
       <WalletList/>
       <AddWallet/>
+      <AddToken/>
   </Provider>
 );

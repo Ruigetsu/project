@@ -1,6 +1,5 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createReducer } from "@reduxjs/toolkit";
 import { fetchAllWallets } from "../requests/WalletApi";
-
 
 const walletReducer = createReducer(await fetchAllWallets(), (builder) => {
     builder
