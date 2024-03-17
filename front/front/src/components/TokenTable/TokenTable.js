@@ -3,11 +3,15 @@ import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the 
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 import { useSelector } from 'react-redux';
 import "./TokenTable.css";
+<<<<<<< HEAD
 import { useEffect, useState} from "react";
+=======
+>>>>>>> 4ff35137447bb2887e8f51207021bf4d3d56d921
 import { BalanceFormatter, PriceFormatter, ValueRenderer } from './value_renderer';
 import LastUpdate from './menu_item';
 
 function TokenTable () {
+<<<<<<< HEAD
     const balance = useSelector((state) => state.token);
     const [rowData, setRowData] = useState(balance);
     
@@ -15,6 +19,10 @@ function TokenTable () {
         setRowData(balance);
     }, [balance]);
     
+=======
+    const tokens = useSelector(state => state.token);
+
+>>>>>>> 4ff35137447bb2887e8f51207021bf4d3d56d921
     const columnDefs = [
         { field: 'wallet_name', headerName: 'wallet', cellClass: ['celClass', 'celClassLeft']},
         { field: 'asset', headerName: 'asset', cellClass: ['celClass', 'celClassLeft'] },
@@ -42,7 +50,11 @@ function TokenTable () {
          style={{ height: 500 }} // the grid will fill the size of the parent container
         >
           <AgGridReact
+<<<<<<< HEAD
               // rowData={balance}
+=======
+              rowData={tokens}
+>>>>>>> 4ff35137447bb2887e8f51207021bf4d3d56d921
               columnDefs={columnDefs}
           />
         </div>
