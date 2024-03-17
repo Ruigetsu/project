@@ -40,3 +40,22 @@
     font-family: Roboto Mono,monospace;
 }
 
+.token_button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px;
+    margin: 5px;
+
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+
+    background: #3896fb;
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+}

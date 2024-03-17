@@ -1,0 +1,15 @@
+.celClass {
+    font-family: "Roboto Mono", monospace;
+    font-size: 13px;
+    font-weight: 500;
+    font-style: normal;
+}
+.celClassCenter {
+    text-align: center;
+}
+.celClassLeft {
+    text-align: left;
+}
+.celClassRight {
+    text-align: right;
+}

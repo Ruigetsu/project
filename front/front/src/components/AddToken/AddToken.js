@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToken } from '../store/actions';
+import { addToken } from '../../store/actions';
 import './AddToken.css'
-import { fetchAllNetworks } from '../requests/NetworkApi';
-import { createBalance } from '../requests/BalanceApi';
+import { fetchAllNetworks } from '../../requests/NetworkApi';
+import { createBalance } from '../../requests/BalanceApi';
 
 function  AddToken () {
     const Networks = useSelector(state => state.network);
@@ -146,7 +146,7 @@ function  AddToken () {
 
     return (
         <div id='token_form'>
-            <button type="submit" className="button-add" onClick={() => setShow(state => !state)}>
+            <button type="submit" className="token_button" onClick={() => setShow(state => !state)}>
                     Add token
             </button>
             <div style={{display: show ? 'flex':'none'}} className="add_token">

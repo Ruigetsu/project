@@ -100,13 +100,13 @@ textarea {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
+    position: relative;
     padding: 10px;
     margin: 5px;
 
     font-size: 12px;
     font-weight: 500;
-    color: #fff;
+    color: #fff;    
 
     background: #3896fb;
     border: none;
@@ -118,3 +118,11 @@ textarea {
 .wallet_button:hover {
     background: #1285ff;
 }
+
+/* .wallet_button_display_form {
+    font-family: "Roboto Mono", monospace;
+    font-style: normal;
+
+    padding: 8px;
+    font-size: 12px;
+} */

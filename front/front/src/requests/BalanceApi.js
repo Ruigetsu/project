@@ -6,10 +6,9 @@ let host = '3f9215732d0c.vps.myjino.ru'
 export const createBalance = async (wallet) => {
     const config = {
         headers: {
-            'Content-Type':'multipart/form-data'
+         'Content-Type': 'multipart/form-data'        
         }
     }
-    
     const {data} = await axios.post(`http://${host}/api/balance/`, wallet, config);
     return data
 }
