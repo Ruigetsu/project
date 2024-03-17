@@ -7,11 +7,15 @@ import { fetchAllNetworks } from '../requests/NetworkApi';
 import { createBalance } from '../requests/BalanceApi';
 
 function  AddToken () {
+    const Networks = useSelector(state => state.network);
     const wallets = useSelector(state => state.wallet);
     const [address, setAddress] = useState('');
     const [walletId, setWalletId] = useState(null);
+    const [networkId, setNetworkId] = useState(null)
     const [wopt, setWopt] = useState([]); 
+    const [nopt, setNopt] = useState([]);
     const [errors, setErrors] = useState({});
+
 
     const [submitting, setSubmitting] = useState(false);
     const dispatch = useDispatch();
@@ -60,40 +64,58 @@ function  AddToken () {
         }),
     };
 
+    //useEffect(() => {
+    //    fetchAllNetworks().then(data => {
+    //        let networks = data.data
+    //        let network_opt = networks.map((network) => {
+    //        setNetworkId(network.id);  
+    //            return (
+    //                {value:network.id, label: network.network}
+    //        )
+    //        })
+    //        setNopt(network_opt);
+    //        
+            
+    //    }); 
 
+    //}, [Networks]);
+
+    
     useEffect(() => {
-       let wallet_opt = wallets.map((wallet) => {
+       let wallet_opt = wallets && wallets.map && wallets.map((wallet) => {
             return { value: wallet.id, label: wallet.wallet_name }
         });
 
         setWopt(wallet_opt);
+        fetchAllNetworks().then(data => {
+            let nopt = [];
+            nopt = data.data.map((network) =>{
+                return {value: network.id, label: network.network, color: "black"}
+            })
 
-
-        // fetchAllNetworks().then(data => {
-        //     console.log(data.data)
-        // }) 
+            setNopt(nopt);
+        });
     }, [wallets])
 
 
     useEffect(() => {
         if (submitting && Object.keys(errors).length === 0) {
             console.log(address, walletId.value)
-            // const newToken = new FormData();
-            // newToken.append('asset_address', address);
-            // newToken.append('wallet_id', String(walletId));
-            // newToken.append('network_id', String(networkId));
+             const newToken = new FormData();
+             newToken.append('token_address', address);
+             newToken.append('wallet_id', String(walletId));
+             newToken.append('network_id', String(networkId));
 
-            // createBalance(newToken)
-            //     .then((result) => dispatch(addToken(result)))
-            //     // .then(() => { 
-            //     //     setShow(false); 
-            //     //     setAddress("");
-            //     //     setWalletId(null);
-            //     //     setNetwrokId(null)
-            //     // })
-            //     .catch((err) => {
-            //         setErrors({address:err.response.data})
-            //     });
+             createBalance(newToken)
+                 .then((result) => dispatch(addToken(result))).then(() => { 
+                      //setShow(false); 
+                      setAddress("");
+                      setWalletId(null);
+                      setNetworkId(null)
+                  })
+                 .catch((err) => {
+                     setErrors({address:err.response.data})
+               });
             
             setSubmitting(false);
         }
@@ -109,9 +131,9 @@ function  AddToken () {
             err.wallet = "Choose wallet";
         }
 
-        // if (inputValues.network === null) {
-        //     errors.network = "Choose network";
-        // }
+         if (networkId === null) {
+             errors.network = "Choose network";
+         }
     
         setErrors(err);
     };
@@ -149,13 +171,13 @@ function  AddToken () {
                     onChange={(choice) => setWalletId(choice)}
                 />
                 {errors.wallet? <p className='error'>{errors.wallet}</p>: null}
-                {/* <Select 
+                { <Select 
                     styles={styles} 
                     options={nopt}
 
-                    value={walletId}
-                    onChange={(choice) => setWalletId(choice)}
-                /> */}
+                    value={networkId}
+                    onChange={(choice) => setNetworkId(choice)}
+                />}
                 <button type="submit" className="button-add" style={{width: "100%"}} onClick={handleClick}>
                     Add
                 </button>

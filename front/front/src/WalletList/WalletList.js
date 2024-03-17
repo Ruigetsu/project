@@ -12,7 +12,7 @@ function WalletList(props) {
                 className="wallets_wrapper"
             >
                 {
-                  wallets && wallets.map((item, index)=>{
+                  wallets && wallets.map && wallets.map((item, index)=>{
                      return  <WalletItem key={index} wallet={item} index={index}></WalletItem>
                  })
                 }

@@ -6,8 +6,10 @@ const tokenReducer = createReducer(await fetchAllBalances(), (builder) => {
         .addCase('ADD_TOKEN', (state, action) => {
             return [...state, action.payload];
         })
-        .addCase('REMOVE_TOKEN', (state, action) => {
-            return state.filter((token) => token.id !== action.payload);
-        })
+        .addCase('REMOVE_WALLET', (state, action) => {
+            return state.filter(
+                (token, i) => token.id !== action.payload
+            );
+        });
   });
 export default tokenReducer;

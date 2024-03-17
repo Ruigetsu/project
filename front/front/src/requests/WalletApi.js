@@ -3,8 +3,9 @@ import axios from "axios";
 let host = '3f9215732d0c.vps.myjino.ru'
  
 export const fetchAllWallets = async () => {
+    
     const {data} = await  axios.get(`http://${host}/api/wallet/`);
-    return data.data;
+    return data.data
 }
 
 
