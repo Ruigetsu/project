@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import RemoveButton from './RemoveButton';
 import './WalletItem.css'
 

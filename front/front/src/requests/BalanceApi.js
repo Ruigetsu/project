@@ -16,7 +16,7 @@ export const createBalance = async (wallet) => {
 
 export const fetchAllBalances = async ()  => {
     const {data} = await  axios.get(`http://${host}/api/balance/`);
-    return data
+    return data.data
 }
 
 export const fetchBalance = async (id)  => {

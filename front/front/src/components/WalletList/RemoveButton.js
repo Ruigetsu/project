@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
-import { deleteWallet } from '../requests/WalletApi';
+import { deleteWallet } from '../../requests/WalletApi';
 import './RemoveButton.css';
-import { removeWallet } from '../store/actions';
+import { removeWallet } from '../../store/actions';
 
 function RemoveButton({wallet}) {
     const dispatch = useDispatch();

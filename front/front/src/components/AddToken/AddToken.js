@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToken } from '../store/actions';
+import { addToken } from '../../store/actions';
 import './AddToken.css'
-import { fetchAllNetworks } from '../requests/NetworkApi';
-import { createBalance } from '../requests/BalanceApi';
+import { fetchAllNetworks } from '../../requests/NetworkApi';
+import { createBalance } from '../../requests/BalanceApi';
 
 function  AddToken () {
     const Networks = useSelector(state => state.network);

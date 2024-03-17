@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { createWallet } from '../requests/WalletApi';
-import { addWallet } from '../store/actions';
+import { createWallet } from '../../requests/WalletApi';
+import { addWallet } from '../../store/actions';
 import './AddWallet.css'
 import { useEffect, useState } from 'react';
 
