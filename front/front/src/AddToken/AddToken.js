@@ -15,7 +15,7 @@ function  AddToken () {
     const [wopt, setWopt] = useState([]); 
     const [nopt, setNopt] = useState([]);
     const [errors, setErrors] = useState({});
-
+    const [show, setShow] = useState(false);
 
     const [submitting, setSubmitting] = useState(false);
     const dispatch = useDispatch();
@@ -63,24 +63,25 @@ function  AddToken () {
             marginLeft: "5px"
         }),
     };
-
-    //useEffect(() => {
-    //    fetchAllNetworks().then(data => {
-    //        let networks = data.data
-    //        let network_opt = networks.map((network) => {
-    //        setNetworkId(network.id);  
-    //            return (
-    //                {value:network.id, label: network.network}
-    //        )
-    //        })
-    //        setNopt(network_opt);
-    //        
-            
-    //    }); 
-
-    //}, [Networks]);
-
     
+    useEffect(() => {
+        const div = document.querySelector('#token_form');
+        
+        function unShowForm(e) {
+            const withinBoundaries = e.composedPath().includes(div);
+        
+            if (!withinBoundaries) {
+                setShow(false); 
+            }
+        };
+
+        document.addEventListener('click', unShowForm)
+
+        return () => {
+            document.removeEventListener('click', unShowForm);
+        }
+    }, []);
+
     useEffect(() => {
        let wallet_opt = wallets && wallets.map && wallets.map((wallet) => {
             return { value: wallet.id, label: wallet.wallet_name }
@@ -100,23 +101,21 @@ function  AddToken () {
 
     useEffect(() => {
         if (submitting && Object.keys(errors).length === 0) {
-            console.log(address, walletId.value)
-             const newToken = new FormData();
-             newToken.append('token_address', address);
-             newToken.append('wallet_id', String(walletId));
-             newToken.append('network_id', String(networkId));
+            const newToken = new FormData();
+            newToken.append('token_address', address);
+            newToken.append('wallet_id', String(walletId));
+            newToken.append('network_id', String(networkId));
 
-             createBalance(newToken)
-                 .then((result) => dispatch(addToken(result))).then(() => { 
-                      //setShow(false); 
-                      setAddress("");
-                      setWalletId(null);
-                      setNetworkId(null)
-                  })
-                 .catch((err) => {
-                     setErrors({address:err.response.data})
+            createBalance(newToken)
+                .then((result) => dispatch(addToken(result))).then(() => { 
+                    //setShow(false); 
+                    setAddress("");
+                    setWalletId(null);
+                    setNetworkId(null)
+                })
+                .catch((err) => {
+                    setErrors({address:err.response.data})
                });
-            
             setSubmitting(false);
         }
     }, [submitting])
@@ -146,11 +145,11 @@ function  AddToken () {
     }
 
     return (
-        <div>
-            <button type="submit" className="button-add" onClick={handleClick}>
+        <div id='token_form'>
+            <button type="submit" className="button-add" onClick={() => setShow(state => !state)}>
                     Add token
             </button>
-            <div className="add_token">
+            <div style={{display: show ? 'flex':'none'}} className="add_token">
                 <label htmlFor="new-add-address" className='label_token'>Token Address</label>
                 <input 
                     type='text' 
@@ -171,6 +170,7 @@ function  AddToken () {
                     onChange={(choice) => setWalletId(choice)}
                 />
                 {errors.wallet? <p className='error'>{errors.wallet}</p>: null}
+                <label className='label_token'>Network</label>
                 { <Select 
                     styles={styles} 
                     options={nopt}
