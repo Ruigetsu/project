@@ -1,6 +1,9 @@
 .form {
     display: flex;
+    position: fixed;
+    z-index: 9999;
     flex-direction: column;
+    right: 160px;
 
     width: 300px;
     padding: 10px;
@@ -100,7 +103,6 @@ textarea {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    position: relative;
     padding: 10px;
     margin: 5px;
 

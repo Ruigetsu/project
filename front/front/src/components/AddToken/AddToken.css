@@ -1,6 +1,9 @@
 .add_token {
     display: flex;
+    position: absolute;
+    z-index: 9999;
     flex-direction: column;
+    right: 160px;
 
     width: 300px;
     padding: 10px;
