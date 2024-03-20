@@ -14,7 +14,7 @@ export const createBalance = async (wallet) => {
 }
 
 export const fetchAllBalances = async ()  => {
-    const {data} = await  axios.get("http://127.0.0.1:8000/api/balance/");
+    const {data} = await  axios.get(`http://${host}/api/balance/`);
     return data.data
 }
 

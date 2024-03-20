@@ -3,7 +3,6 @@ import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the 
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 import { useSelector } from 'react-redux';
 import "./TokenTable.css";
-import { useEffect, useState} from "react";
 import { BalanceFormatter, PriceFormatter, ValueRenderer } from './value_renderer';
 import LastUpdate from './menu_item';
 
@@ -38,8 +37,8 @@ function TokenTable () {
          style={{ height: 500 }} // the grid will fill the size of the parent container
         >
           <AgGridReact
-              // rowData={balance}
-              columnDefs={columnDefs}
+            rowData={balance}
+            columnDefs={columnDefs}
           />
         </div>
       )
