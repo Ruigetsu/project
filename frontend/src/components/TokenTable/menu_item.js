@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 const LastUpdate = (params) => {
     const [lastUpdate, setLastUpdate] = useState('0 minutes ago');
-    
+
     useEffect(() => {
         formatTimeSinceLastUpdate();
         const intervalId = setInterval(() => {

@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  django:
+    build:
+      context: ./backend 
+      dockerfile:  Dockerfile
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    depends_on: 
+      - psql  
+    networks: 
+      - default
+      - web
+    expose: 
+      - "8000"
+    volumes:
+      - ./backend:/backend
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.django.rule=Host(`8adbbe6d6a9d.vps.myjino.ru`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.django.priority=75"
+      - "traefik.http.services.django.loadbalancer.server.port=8000"
+      - "traefik.docker.network=web"
+
+  psql:
+    image: postgres
+    container_name: psql
+    environment: 
+      -  POSTGRES_USER=postgres
+      -  POSTGRES_PASSWORD=pft,fkb19RU
+      -  POSTGRES_DB=project_database
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+  
+  celery:
+    build:  ./backend
+    command: celery -A myproject worker  --loglevel=info --beat
+    volumes:
+      - ./backend:/backend
+    depends_on: 
+      - psql
+      - redis
+    expose: 
+      - "8001"
+    environment: 
+      - REDIS_HOST=redis
+  
+  react:
+    build:
+      context: ./frontend
+      dockerfile:  Dockerfile
+    command: sh -c "npm start"
+    expose: 
+      - "3000"
+    networks: 
+      - default 
+      - web
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.react.rule=Host(`8adbbe6d6a9d.vps.myjino.ru`)"
+      - "traefik.http.routers.react.priority=25"
+      - "traefik.http.services.react.loadbalancer.server.port=3000"
+      - "traefik.docker.network=web"
+
+networks:
+  web:
+    external: true

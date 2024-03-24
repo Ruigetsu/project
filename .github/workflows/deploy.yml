@@ -1,0 +1,22 @@
+name: Deploy
+
+on: 
+  push:
+    branches: [token_tabel]
+
+jobs:
+  preparing: 
+    runs-on: self-hosted
+    steps: 
+      - name: Checkout code 
+        uses: actions/checkout@v2   
+      - name: Stop and Remove containers
+        run: |
+          docker-compose -p prod -f  ./docker-compose.yml down 
+  deploy: 
+    runs-on: self-hosted
+    steps: 
+      - name: Deploy to prod
+        run: |
+          docker-compose -p prod -f  ./docker-compose.yml build
+          docker-compose -p prod -f  ./docker-compose.yml up -d
