@@ -2,7 +2,7 @@
 
 from django.db import migrations
 def load_initial_data(apps,  schema_editor):
-    network = apps.getmodel('wallet', 'Network')
+    network = apps.get_model('wallet', 'Network')
     network.objects.create(
         network='ERC20',
         network_url='https://mainnet.infura.io/v3/3c7ba8ecf29b439ab0cb11ddc4b70989', 
