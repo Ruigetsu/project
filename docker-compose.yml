@@ -51,8 +51,6 @@ services:
     build:
       context: ./frontend
       dockerfile:  Dockerfile
-    volumes:
-      - ./frontend:/frontend
     command: sh -c "npm start"
     expose: 
       - "3000"

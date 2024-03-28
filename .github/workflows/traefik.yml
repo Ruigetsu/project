@@ -2,7 +2,7 @@ name: traefik
 
 on: 
   push:
-    branches: [token_tabel]
+    branches: [main]
 
 jobs: 
   traefik: 
