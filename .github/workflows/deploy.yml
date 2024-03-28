@@ -2,7 +2,7 @@ name: Deploy
 
 on: 
   push:
-    branches: [token_tabel]
+    branches: []
 
 jobs:
   preparing: 
