@@ -1,7 +1,7 @@
 FROM node:alpine
-RUN mkdir /frontend
 WORKDIR /frontend
+COPY package.json .
+RUN npm --force install 
 COPY . .
-RUN npm install
-
+COPY ./src /frontend/src
 CMD ["npm", "start"]
