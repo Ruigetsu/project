@@ -1,8 +1,7 @@
-FROM node:20.11.-alpine
+FROM node:alpine
 RUN mkdir /frontend
 WORKDIR /frontend
-COPY package.json .
-RUN npm install --force 
 COPY . .
-COPY ./src /frontend/src
+RUN npm install
+
 CMD ["npm", "start"]
