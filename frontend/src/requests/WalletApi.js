@@ -1,6 +1,6 @@
 import axios from "axios";
 
- let host = '3f9215732d0c.vps.myjino.ru'
+ let host = '8adbbe6d6a9d.vps.myjino.ru'
 // let host = '127.0.0.1:8000' 
 
 export const fetchAllWallets = async () => {
