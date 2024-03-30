@@ -12,10 +12,8 @@ COINMARKETCAP_API = "105dbb7e-bc1c-43f7-8bd8-c617faf01bea"
 #INFURA_API = "0d12ed4428834836abad0bdb71f85446"
 #INFURA_URL = "https://mainnet.infura.io/v3/" + INFURA_API
 
-def is_wallet_connected(wallet_address, network_id):
-    network = Network.objects.get(id=network_id)
-    web3 = Web3(Web3.HTTPProvider(network.network_url))
-    return web3.is_connected(wallet_address)
+def is_wallet_connected(wallet_address):
+    return Web3.is_address(wallet_address)
 
 def get_token_symbol(token_address, network_id):
     network = Network.objects.get(id=network_id)
