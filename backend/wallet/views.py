@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from wallet.request import get_token_symbol, is_wallet_connected, get_token_price, get_balance
+from wallet.request import get_token_symbol, is_wallet_connected, get_token_price, get_balance, is_contract_exist
 from .models import Wallet, Balance, Network
 from .serializers import WalletSerializer, BalanceSerializer
 from wallet.serializers import NetworkSerializer
@@ -40,6 +40,22 @@ def balance_list(request, format = None):
         wallet_id  = request.data['wallet_id']
         network_id =  request.data['network_id']
 
+        try:
+            wallet = Wallet.objects.get(pk=wallet_id)
+        except Wallet.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND, headers={'Access-Control-Allow-Origin':'*'})
+
+        try:
+            network = Network.objects.get(pk=network_id)
+        except Network.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND, headers={'Access-Control-Allow-Origin':'*'})
+
+        try:
+            if (not is_contract_exist(token_address, network_id)):
+                return Response("Sush token address doesn't exist", status=status.HTTP_404_NOT_FOUND, headers={'Access-Control-Allow-Origin':'*'})
+        except: 
+            return Response(status=status.HTTP_404_NOT_FOUND, headers={'Access-Control-Allow-Origin':'*'})
+        
         if Balance.objects.filter(wallet_id=wallet_id,network_id = network_id, token_address=token_address).count() != 0:
             return Response("ERROR",status=status.HTTP_400_BAD_REQUEST)
         wallet = Wallet.objects.get(pk=wallet_id)

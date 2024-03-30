@@ -15,51 +15,68 @@ COINMARKETCAP_API = "105dbb7e-bc1c-43f7-8bd8-c617faf01bea"
 def is_wallet_connected(wallet_address):
     return Web3.is_address(wallet_address)
 
-def get_token_symbol(token_address, network_id):
+def get_token_symbol(token_adress, network_id):
     network = Network.objects.get(id=network_id)
     web3 = Web3(Web3.HTTPProvider(network.network_url))
     if web3.is_connected():
-        contract = web3.eth.contract(token_address, abi = network.network_ABI)
-        token_symbol = contract.functions.symbol().call()
-        return token_symbol
-    else:
-        return ""
+        try:
+            contract = web3.eth.contract(token_adress, abi=network.network_ABI)
+            token_symbol = contract.functions.symbol().call()
+            
+            return token_symbol
+        except:
+            return None
 
-def get_token_price(token_symbol):
-
+    return None
+        
+def get_token_price(symbol):
     parameters = {
-        'amount' : 1,
-        'symbol': token_symbol,
-        'convert' : "USDT"
-        }
-    
+        'amount': 1,
+        'symbol': symbol,
+        'convert':'USDT'
+    }
     headers = {
-    'Accepts': 'application/json',
-    'X-CMC_PRO_API_KEY': COINMARKETCAP_API,
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': COINMARKETCAP_API,
     }
 
     session = Session()
     session.headers.update(headers)
 
     try:
-
         response = session.get(url, params=parameters)
-        print(response)
-        data = response.json().get("data")
-        return data[0]['quote']['USDT']['price']
+        data = json.loads(response.text)
+        return data['data'][0]['quote']['USDT']['price']
+    except:
+        return None
 
-    except (ConnectionError, Timeout, TooManyRedirects) as e:
-        
-        print(e)
-        
-def get_balance(wallet_address, token_address,network_id):
+    return None
+
+def is_contract_exist(token_adress, network_id):
     network = Network.objects.get(id=network_id)
+
     web3 = Web3(Web3.HTTPProvider(network.network_url))
     if web3.is_connected():
-        contract = web3.eth.contract(token_address, abi = network.network_ABI)
-        token_demicals = contract.functions.decimals().call()
-        token_balance = contract.functions.balanceOf(wallet_address).call()
-        balance = token_balance / 10**token_demicals
-        return balance
-    else:
-        return None
+        try:
+            contract = web3.eth.contract(token_adress, abi=network.network_ABI)
+            return True
+        except:
+            return False
+        
+def get_balance(wallet_adress, token_adress, network_id):
+    network = Network.objects.get(id=network_id)
+
+    web3 = Web3(Web3.HTTPProvider(network.network_url))
+    if web3.is_connected():
+        try:
+            contract = web3.eth.contract(token_adress, abi=network.network_ABI)
+            balance_of_token = contract.functions.balanceOf(wallet_adress).call()  # in Wei
+            token_decimals = contract.functions.decimals().call()
+
+            balance = balance_of_token/ 10 ** token_decimals
+            
+            return balance
+        except:
+            return None
+
+    return None
