@@ -10,7 +10,6 @@ class Wallet(models.Model):
 class Balance(models.Model):
     token = models.CharField(max_length=20) #symbol
     token_address = models.CharField(max_length = 255, blank = True)
-    network = models.CharField(max_length = 20)
     balance = models.FloatField(default = 0) #amount actually
     price = models.FloatField(default = 0) # price for 1  token in USD
     createdAt = models.DateTimeField("Created At", auto_now_add = True)
