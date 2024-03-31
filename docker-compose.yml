@@ -17,7 +17,7 @@ services:
       - ./backend:/backend
     labels: 
       - "traefik.enable=true"
-      - "traefik.http.routers.django.rule=Host(`8adbbe6d6a9d.vps.myjino.ru`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.django.rule=Host(`8adbbe6d6a9d.vps.myjino.ru`) && PathPrefix(`/api`) || PathPrefix(`/ws`)"
       - "traefik.http.routers.django.priority=75"
       - "traefik.http.services.django.loadbalancer.server.port=8000"
       - "traefik.docker.network=web"

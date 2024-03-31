@@ -7,7 +7,7 @@ class WalletSerializer(serializers.ModelSerializer):
 
 class BalanceSerializer(serializers.ModelSerializer):
     wallet_name = serializers.ReadOnlyField(source = 'wallet_id.wallet_name')
-    network_name = serializers.ReadOnlyField(source='network_id.network_name')
+    network_name = serializers.ReadOnlyField(source='network_id.network')
     
     class Meta:
         model = Balance
