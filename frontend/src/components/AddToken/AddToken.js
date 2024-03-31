@@ -103,8 +103,9 @@ function  AddToken () {
         if (submitting && Object.keys(errors).length === 0) {
             const newToken = new FormData();
             newToken.append('token_address', address);
-            newToken.append('wallet_id', String(walletId));
-            newToken.append('network_id', String(networkId));
+            newToken.append('wallet_id', String(walletId.value));
+            newToken.append('network_id', String(networkId.value));
+            console.log(networkId, walletId)
 
             createBalance(newToken)
                 .then((result) => dispatch(addToken(result))).then(() => { 
