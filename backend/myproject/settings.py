@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': 'project_database',
         'USER': 'postgres',
         'PASSWORD': 'pft,fkb19RU',
-        'HOST': 'localhost',
+        'HOST': 'psql',
         'PORT': '5432',
     }
 }
