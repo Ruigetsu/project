@@ -10,14 +10,12 @@ const LastUpdate = (params) => {
             setLastUpdate(formatTimeSinceLastUpdate())
         }, 1000);
 
-        // Очищаем интервал при размонтировании компонента
         return () => clearInterval(intervalId);
     }, [params]);
 
-    // Функция для форматирования времени, прошедшего с последнего обновления
     const formatTimeSinceLastUpdate = () => {
-        const now = new Date(); // 17.03.2024
-        let value = new Date(params.value); // 16.03.2024
+        const now = new Date(); 
+        let value = new Date(params.value); 
         const diff = now - value;
         const seconds = Math.floor(diff / 1000);
         const minutes = Math.floor(seconds / 60);

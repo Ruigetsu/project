@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { createWallet } from '../../requests/WalletApi';
+import { createWallet } from '../../requests/walletApi';
 import { addWallet } from '../../store/actions';
 import './AddWallet.css'
 import { useEffect, useState } from 'react';
@@ -12,7 +12,6 @@ function AddWallet () {
     const dispatch = useDispatch();
 
     const [show, setShow] = useState(false);
-
     const [sendRequest, setSendRequest] = useState(false);
 
     useEffect(() => {
@@ -41,17 +40,21 @@ function AddWallet () {
         newWalet.append('wallet_address', address);
 
         createWallet(newWalet)
-        .then(data => {
-            console.log(data);
-            dispatch(addWallet(data));
-        } )
-        .catch((errors) => {
-            setAddressError(errors.response.data);
-          }
-        )
-
-        setAddress('');
-        setName('');
+            .then(data => {
+                dispatch(addWallet(data));
+                setAddress('');
+                setName('');
+                setShow(false);
+                setSendRequest(false);
+            } )
+            .catch((errors) => {
+                if (errors.response) {
+                    setAddressError(errors.response.data);
+                } else {
+                    console.log("An error occurred:", errors.message);
+                }
+                setSendRequest(false);
+            })
       }
     }, [sendRequest])
 
@@ -75,16 +78,17 @@ function AddWallet () {
 
     const clickShowButton = () => {
         setShow(state => !state);
+        setAddressError(null);
+        setNameError(null);
+        setName("");
+        setAddress("");
+        setSendRequest(false);
     }
 
     return (
         <div id='wallet_form'>
             <button
-                className={
-                            // show?
-                                // "wallet_button display_form display_form_show":
-                                "wallet_button display_form"
-                        }
+                className="wallet_button display_form"
                 onClick={clickShowButton}
             >
                 Add wallet

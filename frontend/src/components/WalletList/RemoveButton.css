@@ -1,3 +1,10 @@
+.remove-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 .delete_svg {
     fill: #adb5bd;
     cursor: pointer;

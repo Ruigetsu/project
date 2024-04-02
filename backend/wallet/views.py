@@ -5,9 +5,7 @@ from wallet.request import get_token_symbol, is_wallet_connected, get_token_pric
 from .models import Wallet, Balance, Network
 from .serializers import WalletSerializer, BalanceSerializer
 from wallet.serializers import NetworkSerializer
-import json
-import requests
-from django.shortcuts import render, redirect
+
 
 @api_view(['GET', 'POST'])
 def wallet_list(request, format = None):
@@ -81,6 +79,26 @@ def balance_list(request, format = None):
 
 @api_view(['GET', 'PUT', 'DELETE'])  
 def wallet_details(request, pk):
+<<<<<<< HEAD
+    try:
+        wallet = Wallet.objects.get(pk=pk)
+    except Wallet.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND, headers={'Access-Control-Allow-Origin':'*'})
+
+    if request.method == 'GET':
+        serializer = WalletSerializer(wallet, context={'request': request})
+        return Response(serializer.data, headers={'Access-Control-Allow-Origin':'*'})
+
+    elif request.method == 'DELETE':
+        print("delete", pk)
+        try:
+            Balance.objects.get(wallet_id=pk).delete()
+        except Balance.DoesNotExist:
+            print([])
+        wallet.delete()
+        
+        return Response(status=status.HTTP_204_NO_CONTENT, headers={'Access-Control-Allow-Origin':'*'})
+=======
     if not pk:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST,headers={'Access-Control-Allow-Origin':'*'})
     try:
@@ -102,9 +120,26 @@ def wallet_details(request, pk):
         serializer = WalletSerializer(wallet, data = request.data, context={'request': request})
         if serializer.is_valid():
             return  Response(serializer.data, status = status.HTTP_200_OK, headers={'Access-Control-Allow-Origin':'*'})
+>>>>>>> fe49282387bb60da4e0fe366fd4438c1fe7a3c80
     
-@api_view(['GET', 'PUT', 'DELETE'])  
+@api_view(['GET', 'PUT', 'DELETE'])
 def balance_details(request, pk):
+<<<<<<< HEAD
+    try:
+        balance = Balance.objects.get(pk=pk)
+    except Balance.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND, headers={'Access-Control-Allow-Origin':'*'})
+
+    if request.method == 'GET':
+        serializer = BalanceSerializer(balance,context={'request': request})
+        return Response(serializer.data, headers={'Access-Control-Allow-Origin':'*'})
+
+    elif request.method == 'DELETE':
+        balance.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT, headers={'Access-Control-Allow-Origin':'*'})
+
+=======
     if not pk:
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST, headers={'Access-Control-Allow-Origin':'*'})
     try:
@@ -124,6 +159,7 @@ def balance_details(request, pk):
         serializer = BalanceSerializer(balance, data = request.data, context={'request': request})
         return  Response(serializer.data, status = status.HTTP_200_OK, headers={'Access-Control-Allow-Origin':'*'})
     
+>>>>>>> fe49282387bb60da4e0fe366fd4438c1fe7a3c80
 @api_view(['GET', 'POST'])
 def network_list(request, format = None):
     if request.method == 'GET':
