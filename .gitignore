@@ -1,7 +1,6 @@
 /myenv
 /env
-/backend/env
-
+env/
 # Byte-compiled / optimized / DLL files
 frontend/node_modules/
 __pycache__/
