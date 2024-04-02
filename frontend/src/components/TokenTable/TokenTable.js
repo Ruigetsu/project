@@ -1,19 +1,30 @@
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import "./TokenTable.css";
 import { BalanceFormatter, PriceFormatter, ValueRenderer } from './value_renderer';
 import LastUpdate from './menu_item';
+import { useEffect } from 'react';
+import { updateToken } from '../../store/actions';
 
 function TokenTable () {
     const balance = useSelector((state) => state.token);
-
+    const dispatch = useDispatch();
     
+    useEffect(() => {
+      const socket = new WebSocket("ws://8adbbe6d6a9d.vps.myjino.ru/ws/wallet");
+      socket.onmessage = (event) => {
+        const data =  JSON.parse(event.data);
+        console.log(data);
+        dispatch(updateToken(data.balance))
+      }
+    }, [])
+ 
     const columnDefs = [
         { field: 'wallet_name', headerName: 'wallet', cellClass: ['celClass', 'celClassLeft']},
-        { field: 'asset', headerName: 'asset', cellClass: ['celClass', 'celClassLeft'] },
+        { field: 'token', headerName: 'asset', cellClass: ['celClass', 'celClassLeft'] },
         { field: 'network_name', headerName: 'network', cellClass: ['celClass', 'celClassLeft'] },
         { field: 'balance', headerName: 'quantity', filter: 'agNumberColumnFilter', cellRenderer: BalanceFormatter,  cellClass: ['celClass', 'celClassLeft'] },
         { field: 'price', headerName: 'price', filter: 'agNumberColumnFilter', cellRenderer: PriceFormatter, cellClass: ['celClass', 'celClassLeft'] },

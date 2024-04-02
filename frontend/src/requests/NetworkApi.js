@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 let host = '8adbbe6d6a9d.vps.myjino.ru'
-// let host = '127.0.0.1:8000'
+// let host = 'localhost:8000'
 
 export const fetchAllNetworks = async () => {
     
