@@ -39,6 +39,7 @@ function TokenTable () {
     const columnDefs = [
         { field: 'wallet_name', headerName: 'wallet', cellClass: ['celClass', 'celClassLeft']},
         { field: 'token', headerName: 'asset', cellClass: ['celClass', 'celClassLeft'] },
+        { field: 'token', headerName: 'asset', cellClass: ['celClass', 'celClassLeft'] },
         { field: 'network_name', headerName: 'network', cellClass: ['celClass', 'celClassLeft'] },
         { field: 'balance', headerName: 'quantity', filter: 'agNumberColumnFilter', cellRenderer: BalanceFormatter,  cellClass: ['celClass', 'celClassLeft'] },
         { field: 'price', headerName: 'price', filter: 'agNumberColumnFilter', cellRenderer: PriceFormatter, cellClass: ['celClass', 'celClassLeft'] },

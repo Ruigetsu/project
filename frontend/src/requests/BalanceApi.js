@@ -14,17 +14,17 @@ export const createBalance = async (wallet) => {
 }
 
 export const fetchAllBalances = async ()  => {
-    const {data} = await  axios.get(`http://${host}/api/balance/`);
-    return data.data
+    const {data} = await axios.get(`http://${host}/api/balance/`)
+
+    return data.data;
 }
 
 export const fetchBalance = async (id)  => {
-    const {data} = await  axios.get(`http://${host}/api/balance/${id}/`);
-    return data
+    const {data} = await axios.get(`http://${host}/api/balance/` + id + "/");
+    return data;
 }
 
-
 export const deleteBalance = async (id)=> {
-    const {data} = await axios.delete(`http://${host}/api/balance/${id}/`);
+    const {data} = await axios.delete(`http://${host}/api/balance/` + id + `/`);
     return data;
 }
