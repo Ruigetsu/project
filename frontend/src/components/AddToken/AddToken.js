@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { addToken } from '../../store/actions';
+import { fetchAllNetworks } from '../../requests/networkApi';
+import { createBalance } from '../../requests/balanceApi';
 import './AddToken.css'
-import { fetchAllNetworks } from '../../requests/NetworkApi';
-import { createBalance } from '../../requests/BalanceApi';
 
 function  AddToken () {
-    const Networks = useSelector(state => state.network);
     const wallets = useSelector(state => state.wallet);
     const [address, setAddress] = useState('');
     const [walletId, setWalletId] = useState(null);
@@ -90,7 +90,7 @@ function  AddToken () {
         setWopt(wallet_opt);
         fetchAllNetworks().then(data => {
             let nopt = [];
-            nopt = data.data.map((network) =>{
+            nopt = data.map((network) =>{
                 return {value: network.id, label: network.network, color: "black"}
             })
 
@@ -105,19 +105,20 @@ function  AddToken () {
             newToken.append('token_address', address);
             newToken.append('wallet_id', String(walletId.value));
             newToken.append('network_id', String(networkId.value));
-            console.log(networkId, walletId)
 
             createBalance(newToken)
-                .then((result) => dispatch(addToken(result))).then(() => { 
-                    //setShow(false); 
+                .then((result) => dispatch(addToken(result)))
+                .then(() => { 
+                    setShow(false); 
                     setAddress("");
                     setWalletId(null);
-                    setNetworkId(null)
+                    setNetworkId(null);
+                    setSubmitting(false);
                 })
                 .catch((err) => {
-                    setErrors({address:err.response.data})
+                    setErrors({address:err.response.data});
+                    setSubmitting(false);
                });
-            setSubmitting(false);
         }
     }, [submitting])
 
@@ -145,9 +146,17 @@ function  AddToken () {
         setSubmitting(true);
     }
 
+    const clickShowButton = () => {
+        setShow(prevState => !prevState);
+        setAddress("");
+        setWalletId(null);
+        setNetworkId(null);
+        setSubmitting(false);
+    }
+
     return (
         <div id='token_form'>
-            <button type="submit" className="token_button" onClick={() => setShow(state => !state)}>
+            <button type="submit" className="token_button" onClick={clickShowButton}>
                     Add token
             </button>
             <div style={{display: show ? 'flex':'none'}} className="add_token">
@@ -179,7 +188,11 @@ function  AddToken () {
                     value={networkId}
                     onChange={(choice) => setNetworkId(choice)}
                 />}
-                <button type="submit" className="button-add" style={{width: "100%"}} onClick={handleClick}>
+                <button 
+                    className="button-add"
+                    style={{width: "100%", cursor: submitting?"not-allowed":"pointer"}}
+                    onClick={handleClick}
+                >
                     Add
                 </button>
             </div>

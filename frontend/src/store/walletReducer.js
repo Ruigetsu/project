@@ -1,6 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { fetchAllWallets } from "../requests/WalletApi";
-
+import { fetchAllWallets } from "../requests/walletApi";
 
 const walletReducer = createReducer(await fetchAllWallets(), (builder) => {
     builder
@@ -12,5 +11,6 @@ const walletReducer = createReducer(await fetchAllWallets(), (builder) => {
                 (wallet, i) => wallet.id !== action.payload
             );
         });
-  });
+});
+
 export default walletReducer;

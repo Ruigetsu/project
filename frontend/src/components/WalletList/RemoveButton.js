@@ -1,13 +1,21 @@
-import { useDispatch } from 'react-redux';
-import { deleteWallet } from '../../requests/WalletApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteWallet } from '../../requests/walletApi';
 import './RemoveButton.css';
-import { removeWallet } from '../../store/actions';
+import { removeWallet, removeToken } from '../../store/actions';
 
 function RemoveButton({wallet}) {
     const dispatch = useDispatch();
+    const balance = useSelector((state) => state.token);
 
     const handleClick = (e) => {
         e.preventDefault();
+        balance.forEach((token) => {
+            if (token.wallet_id === wallet.id) {
+                dispatch(removeToken(wallet.id))
+            }
+        })
+
+        console.log(wallet.id)
         deleteWallet(wallet.id);
         dispatch(removeWallet(wallet.id));
     }
