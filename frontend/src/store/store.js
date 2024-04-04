@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux';
-import tokenReducer from './TokenReducer.js';
+import tokenReducer from './tokenReducer.js';
 import walletReducer from './walletReducer.js';
 
 const rootReducer = combineReducers({
