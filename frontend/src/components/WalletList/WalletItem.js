@@ -31,6 +31,7 @@ function WalletItem({wallet, index}) {
                             </div>
                         </div>
                     </CopyToClipboard>
+                <div className='wallet_sum'>{wallet.wallet_sum} $</div>
                 </div>
             </div>
             <RemoveButton wallet={wallet}/>

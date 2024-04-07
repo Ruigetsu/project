@@ -1,0 +1,25 @@
+.alert_form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+
+    padding: 5px 10px;
+}
+
+
+.alerts_header {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+
+    cursor: pointer;
+}
+
+.alerts_header_text {
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans",
+                Ubuntu, Cantarell, "Helvetica Neue",  sans-serif, "Apple Color Emoji",
+                "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 14px;
+
+}

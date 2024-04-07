@@ -46,7 +46,7 @@
 }
 
 .wallet_adress {
-    margin-right: 40px;
+    margin: 0px 60px;
     position: relative;
 
     display: flex;
@@ -97,4 +97,9 @@
     border: 5px solid transparent; 
     border-top: 5px solid #14283f;
 
+}
+
+.wallet_sum{
+    display:flex;
+    margin-left:35px
 }

@@ -3,7 +3,7 @@ from django.db import models
 class Wallet(models.Model):
     wallet_name = models.CharField(max_length=255, unique = True)
     wallet_address = models.CharField(max_length=255, unique = True)
-    
+    wallet_sum = models.IntegerField(default=0)
     def __str__(self):
         return self.wallet_name
 
