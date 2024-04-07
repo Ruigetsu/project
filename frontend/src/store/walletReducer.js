@@ -12,7 +12,12 @@ const walletReducer = createReducer(await fetchAllWallets(), (builder) => {
             );
         })
         .addCase('UPDATE_WALLET', (state, action) => {
-            return action.payload;
+            return state.map(element => {
+                if (element.id === action.payload.id) 
+                    return action.payload
+                else
+                    return  element;
+            })
         })
 });
 

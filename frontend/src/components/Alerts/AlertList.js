@@ -3,11 +3,19 @@ import { useEffect, useState } from 'react';
 import Alert from './Alert';
 
 function AlertList() {
-    const alert = [
-        {token:"ETH", wallet:'wallet_1', balance:3, updated:'2024-04-03 15:00'},
-        {token:"ETH", wallet:'wallet_1', balance:-3, updated:'2024-04-03 15:00'}
-    ]
+    const [alert, setAlert] = useState([])
     const [show, setShow] = useState(false);
+
+    useEffect(() => {
+        const chatSocket =  new WebSocket(`ws://localhost:8000/ws/alert/`);
+    
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            if (data.wallet) setAlert(prevAlert => [...prevAlert, data.wallet]);
+
+            if (data.balance) setAlert(prevAlert => [...prevAlert, data.balance]);
+        }
+    }, [])
 
     const handleClick = () => {
         setShow(state => !state);

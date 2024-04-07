@@ -50,7 +50,7 @@ class Wallet(models.Model):
 class Network(models.Model):
     network = models.CharField(max_length=20)
     network_url = models.CharField(max_length=256)
-    network_abi = models.TextField()
+    network_ABI = models.TextField()
     network_chain = models.CharField(default="")
 
     def __str__(self):
