@@ -10,7 +10,15 @@ const tokenReducer = createReducer(await fetchAllBalances(), (builder) => {
             return state.filter(
                 (token, i) => token.id !== action.payload
             );
-        });
+        })
+        .addCase('UPDATE_TOKEN', (state, action) => {
+            return state.map(element => {
+                if (element.id === action.payload.id) 
+                    return element = action.payload;
+                else 
+                    return element;
+            });
+        })
 });
 
 export default tokenReducer;

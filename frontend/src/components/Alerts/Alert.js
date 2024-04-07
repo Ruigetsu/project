@@ -1,38 +1,33 @@
-import { useState } from 'react';
+import React from 'react';
+import "./Alert.css";
+
 
 
 function Alert({alert}) {
-
-    const formatDate = (date) => {
-        let d = new Date(date);
-        
-        let hh = d.getHours();
-        let mm = d.getMinutes();
-        let ss = d.getSeconds();
-
-        return `${hh}:${mm}:${ss}`
-    }
-
     return (
-        <div className='alert_wrapper'>
-            <div className='alert_item'>
-                <div className='allet_wallet'>{alert.wallet}</div>
-                <div className='alert_token'>{alert.token}</div>
+        <div 
+            className="alert_item_wrapper"
+            style={{borderColor: alert.balance>0? "#00a186":"#dc3545"}}
+            data-testid="alert_item"
+        >
+            <div className='alert_text'>
+                <svg className="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" color={alert.balance>0? "#00a186":"#dc3545"} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
             </div>
-            <div className="alert_item">
-                <div className={alert.balance>0? "up": alert.balance<0? "down": "null"} style={{marginLeft: "50px"}}>
-                    {alert.balance.toFixed(4)}
-                </div>
-                <div className={alert.price>0? "up": alert.price<0? "down": "null"}>
-                    {alert.price.toFixed(4)}
-                </div>
-            </div>
-            <div className="alert_time">
-                {formatDate(alert.updated)}
+            <div className='alert_text' style={{marginLeft: "5px", width: "120px"}}>{alert.updated}</div>
+            <div className='alert_text' style={{marginLeft: "5px"}}>
+                {
+                    alert.asset
+                    ?
+                    <span>Balance of <b>{alert.asset}({alert.network})</b> on <b>{alert.wallet}</b> changed: </span>
+                    :
+                    <span>Balance of <b>{alert.wallet}</b> changed: </span>
+                }
+                <span className={alert.balance>0? "up alert_balance":"down alert_balance"}>${alert.balance.toFixed(4)}</span>.
             </div>
         </div>
-        
-    )
+    );
 }
 
 export default Alert;

@@ -16,7 +16,7 @@ function App() {
             </div>
             <TokenTable/>
             <AlertList/>
-            {/* <div className='footer'>v1.0.0</div>   */}
+            <div className='footer'>v1.0.0</div>  
         </div>
     );
 }

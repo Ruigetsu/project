@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import CustomToolPanel from '../AggridFilter/filters.js';
 import { BalanceFormatter, PriceFormatter, ValueRenderer } from './value_renderer';
-import { updateToken, removeToken } from '../../store/actions.js';
+import { updateToken, removeToken, updateWallet } from '../../store/actions.js';
 import { deleteBalance } from '../../requests/balanceApi.js';
 import LastUpdate from './menu_item';
 import "./TokenTable.css";
@@ -25,6 +25,8 @@ function TokenTable () {
             const data = JSON.parse(e.data);
     
             if (data.balance) dispatch(updateToken(data.balance));
+        
+            if (data.wallet) dispatch(updateWallet(data.wallet))
         }
     }, []);
 
