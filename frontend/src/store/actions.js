@@ -40,4 +40,11 @@ function removeToken(id) {
     };
 }
 
-export { addWallet, addToken, removeToken, removeWallet, updateAllToken, updateToken };
+function updateWallet(wallet) {
+    return {
+      type: 'UPDATE_WALLET',
+      payload: wallet,
+    }
+}
+
+export { addWallet, addToken, removeToken, removeWallet, updateAllToken, updateToken, updateWallet};

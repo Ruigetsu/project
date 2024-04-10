@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { fetchAllBalances } from "../requests/balanceApi";
+import { fetchAllBalances } from "../requests/BalanceApi";
 
 const tokenReducer = createReducer(await fetchAllBalances(), (builder) => {
     builder
@@ -10,7 +10,15 @@ const tokenReducer = createReducer(await fetchAllBalances(), (builder) => {
             return state.filter(
                 (token, i) => token.id !== action.payload
             );
-        });
+        })
+        .addCase('UPDATE_TOKEN', (state, action) => {
+            return state.map(element => {
+                if (element.id === action.payload.id) 
+                    return action.payload;
+                else 
+                    return element;
+            });
+        })
 });
 
 export default tokenReducer;

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteWallet } from '../../requests/walletApi';
+import { deleteWallet } from '../../requests/WalletApi';
 import './RemoveButton.css';
 import { removeWallet, removeToken } from '../../store/actions';
 

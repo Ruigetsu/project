@@ -28,3 +28,13 @@ export const deleteBalance = async (id)=> {
     const {data} = await axios.delete(`http://${host}/api/balance/` + id + `/`);
     return data;
 }
+
+export const updateBalance = async (balance) => {
+    const config = {
+        headers: {
+         'Content-Type': 'multipart/form-data'        
+        }
+    }
+    const {data} = await axios.put(`http://${host}/api/balance/${balance.id}/`, balance, config);
+    return data
+}
