@@ -8,8 +8,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import CustomToolPanel from '../AggridFilter/filters.js';
 import { BalanceFormatter, PriceFormatter, ValueRenderer } from './value_renderer';
-import { updateToken, removeToken } from '../../store/actions.js';
-import { deleteBalance } from '../../requests/balanceApi.js';
+import { updateToken, removeToken, updateWallet } from '../../store/actions.js';
+import { deleteBalance, updateBalance } from '../../requests/BalanceApi.js';
 import LastUpdate from './menu_item';
 import "./TokenTable.css";
 
@@ -25,6 +25,8 @@ function TokenTable () {
             const data = JSON.parse(e.data);
     
             if (data.balance) dispatch(updateToken(data.balance));
+        
+            if (data.wallet) dispatch(updateWallet(data.wallet))
         }
     }, []);
 
@@ -94,15 +96,33 @@ function TokenTable () {
           ...(params.defaultItems || []),
           'separator',
           {
-            name: 'Delete row',
+            name: params.node.data.track ? 'Untrack':"Track",
             action: () => handleClick(params.node.data)
           },
+          {
+            name: "change delta",
+            action: () => changeDelta(params.node.data)
+          }
         ];
       }, []);
+    
+    const changeDelta = (data) => {
+        let value = prompt("Enter new delta value: ");
+        let parsed_value = parseFloat(value)
+        if (!isNaN(parsed_value)) {
+            let new_data = {...data, delta:parsed_value};
+            dispatch(updateToken(new_data));
+            updateBalance(new_data)
+        }
+        else {
+            alert("Input correct value")
+        }
+    };
 
     const handleClick = (data) => {
-        deleteBalance(data.id);
-        dispatch(removeToken(data.id));
+        let new_data = {...data, track:!data.track};
+        dispatch(updateToken(new_data));
+        updateBalance(new_data)
     }
 
     return (

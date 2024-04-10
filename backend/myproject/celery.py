@@ -15,7 +15,11 @@ def debug_task(self):
 
 app.conf.beat_schedule = {
     "realtime_task_schedule": {
-        "task": "realtime_task",
+        "task": "updateBalance",
+        "schedule": crontab(minute='*/15'),
+    },
+    "realtime_task_wallet_schedule": {
+        "task": "updateWallet",
         "schedule": crontab(minute='*/15'),
     }
 }

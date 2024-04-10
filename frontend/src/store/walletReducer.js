@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { fetchAllWallets } from "../requests/walletApi";
+import { fetchAllWallets } from "../requests/WalletApi";
 
 const walletReducer = createReducer(await fetchAllWallets(), (builder) => {
     builder
@@ -10,7 +10,15 @@ const walletReducer = createReducer(await fetchAllWallets(), (builder) => {
             return state.filter(
                 (wallet, i) => wallet.id !== action.payload
             );
-        });
+        })
+        .addCase('UPDATE_WALLET', (state, action) => {
+            return state.map(element => {
+                if (element.id === action.payload.id) 
+                    return action.payload
+                else
+                    return  element;
+            })
+        })
 });
 
 export default walletReducer;

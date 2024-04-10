@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  django:
+    build:
+      context: ./backend 
+      dockerfile:  Dockerfile
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    depends_on: 
+      - psql  
+    networks: 
+      - default
+      - web
+    ports: 
+      - "8000:8000"
+    volumes:
+      - ./backend:/backend
+
+  psql:
+    image: postgres
+    container_name: psql
+    environment: 
+      -  POSTGRES_USER=postgres
+      -  POSTGRES_PASSWORD=pft,fkb19RU
+      -  POSTGRES_DB=project_database
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+  
+  celery:
+    build:  ./backend
+    command: celery -A myproject worker  --loglevel=info --beat
+    volumes:
+      - ./backend:/backend
+    depends_on: 
+      - psql
+      - redis
+    ports: 
+      - "8001:8001"
+    environment: 
+      - REDIS_HOST=redis
+  
+  react:
+    build:
+      context: ./frontend
+      dockerfile:  Dockerfile
+    command: sh -c "npm start"
+    ports: 
+      - "3000:3000"
+    networks: 
+      - default 
+      - web
+
+networks:
+  web:
+    external: true

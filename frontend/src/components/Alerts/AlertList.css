@@ -1,0 +1,47 @@
+.alert_form {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+
+    justify-content: space-between;
+    align-items: stretch;
+    
+    border: 1px  solid #dedede;
+    border-radius: 10px;
+    background-color:  white;
+    
+    padding: 5px 10px;
+    
+    bottom:0px;
+    width: 400px;
+    right: 30px;
+   
+    z-index: 100;
+}
+
+
+.alerts_header {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+
+    cursor: pointer;
+}
+
+.alerts_header_text {
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans",
+                Ubuntu, Cantarell, "Helvetica Neue",  sans-serif, "Apple Color Emoji",
+                "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    
+    justify-content: flex-start;
+
+    font-size: 16px;
+    font-weight: 400;
+    width: 10px;
+}
+
+.alert_form_wrapper {
+    width:100%;
+    height: 300px;
+    flex-direction: column;
+}
